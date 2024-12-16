@@ -10,25 +10,25 @@
 <body>
     <h1>Welcome to Expressjs</h1>
     <table>
-    <tr>
-        <td>Id</td>
-        <td>name</td>
-        <td>ssubejct</td>
-    </tr>
-
-    <%students.map((e,i)=> {%>
         <tr>
-            <td>
-                <%=e.id%>
-            </td>
-            <td>
-                <%=e.name%>
-            </td>
-            <td>
-                <%=e.subejct%>
-            </td>
+            <td>Id</td>
+            <td>name</td>
+            <td>subejct</td>
         </tr>
-        
-        <%})%>
+
+        <%students.map((e,i)=> {%>
+            <tr>
+                <td>
+                    <%=e.id%>
+                </td>
+                <td>
+                    <%=e.name%>
+                </td>
+                <td>
+                    <%=e.subejct%>
+                </td>
+            </tr>
+
+            <%})%>
     </table>
 </body>

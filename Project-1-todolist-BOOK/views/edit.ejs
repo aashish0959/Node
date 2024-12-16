@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Book</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  
+  <% if (!singleData) { %>
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+      <h1 class="text-2xl font-bold text-red-500">Book not found</h1>
+    </div>
+    <% } else { %>
+
+      <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Edit Book</h1>
+        <form action="/updataData" method="POST" class="space-y-6">
+
+     
+          <input type="hidden" name="id" value="<%= singleData.id %>">
+
+    
+          <div>
+            <label for="name" class="block text-gray-700 font-medium mb-2">Name:</label>
+            <input type="text" id="name" name="name" value="<%= singleData.name %>" required
+              class="w-full border  rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
+          </div>
+
+          <div>
+            <label for="author" class="block text-gray-700 font-medium mb-2">Author:</label>
+            <input type="text" id="author" name="author" value="<%= singleData.author %>" required
+              class="w-full border  rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500 p-2">
+          </div>
+
+          
+          <div>
+            <label for="price" class="block text-gray-700 font-medium mb-2">Price:</label>
+            <input type="text" id="price" name="price" value="<%= singleData.price %>" required
+              class="w-full border rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500 p-2">
+          </div>
+
+          <div>
+            <label for="date" class="block text-gray-700 font-medium mb-2">Date:</label>
+            <input type="date" id="date" name="date" value="<%= singleData.date %>" required
+              class="w-full border rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500 p-2">
+          </div>
+
+          <button type="submit"
+            class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 border-2 border-blue-700 rounded-lg hover:from-blue-600 hover:to-blue-700 font-bold">
+            Update Book
+          </button>
+        </form>
+      </div>
+
+      <% } %>
+</body>
+
+</html>

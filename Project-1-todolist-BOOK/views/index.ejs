@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-center">
+            <a href="/" class="text-white text-lg mx-4 hover:text-yellow-400">Home</a>
+            <a href="/addData" class="text-white text-lg mx-4 hover:text-yellow-400">Add Book</a>
+            <a href="/" class="text-white text-lg mx-4 hover:text-yellow-400">View Books</a>
+        </div>
+    </nav>
+
+   
+    <h1 class="text-3xl font-bold text-center mt-8">Welcome to the Bookstore</h1>
+
+
+    <div class="max-w-md mx-auto mt-10 bg-white p-6 shadow-md rounded-lg">
+        <form action="/addData" method="post" class="space-y-4">
+            <div>
+                <label for="name" class="block text-gray-700 font-medium">Book Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your book name" required
+                    class="w-full border  rounded-lg shadow-sm focus:border-blue-600 focus:ring-blue-600 p-2">
+            </div>
+            <div>
+                <label for="author" class="block text-gray-700 font-medium">Author</label>
+                <input type="text" id="author" name="author" placeholder="Enter your author" required
+                    class="w-full border  rounded-lg shadow-sm focus:border-green-600 focus:ring-green-600 p-2">
+            </div>
+            <div>
+                <label for="price" class="block text-gray-700 font-medium">Price</label>
+                <input type="text" id="price" name="price" placeholder="Enter your price" required
+                    class="w-full border rounded-lg shadow-sm focus:border-red-600 focus:ring-red-600 p-2">
+            </div>
+            <div>
+                <label for="price" class="block text-gray-700 font-medium">Date</label>
+                <input type="date" id="date" name="date"  required
+                    class="w-full border rounded-lg shadow-sm focus:border-red-600 focus:ring-red-600 p-2">
+            </div>
+            <button type="submit"
+                class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold py-2 px-4 border-2 border-blue-700 rounded-lg hover:bg-blue-700">
+                Add Book
+            </button>
+        </form>
+    </div>
+
+ 
+    <div class="container mx-auto mt-10">
+        <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="py-2 px-4">Id</th>
+                    <th class="py-2 px-4">Name</th>
+                    <th class="py-2 px-4">Author</th>
+                    <th class="py-2 px-4">Price</th>
+                    <th class="py-2 px-4">Date</th>
+                    <th class="py-2 px-4" colspan="2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% book.map((e, i) => { %>
+                    <tr class="text-center border-b">
+                        <td class="py-2 px-4"><%= e.id %></td>
+                        <td class="py-2 px-4"><%= e.name %></td>
+                        <td class="py-2 px-4"><%= e.author %></td>
+                        <td class="py-2 px-4"><%= e.price %></td>
+                        <td class="py-2 px-4"><%= e.date %></td>
+                        <td class="py-2 px-4">
+                            <a href="/editData/<%= e.id %>"
+                                class="bg-yellow-500 text-white py-1 px-2 rounded-lg border border-yellow-700 hover:bg-yellow-600">Edit</a>
+                        </td>
+                        <td class="py-2 px-4">
+                            <a href="/deleteData?id=<%= e.id %>"
+                                class="bg-red-500 text-white py-1 px-2 rounded-lg border border-red-700 hover:bg-red-600">Delete</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
