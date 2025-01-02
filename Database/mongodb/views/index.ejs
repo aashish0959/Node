@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>CRUD with mongodb</h1>
+    <form action="/addData" method="POST" >
+        <input type="text" name="name" placeholder="Name">
+        <input type="text" name="subject" placeholder="Subject">
+        <input type="text" name="city" placeholder="City">
+      
+        <button type="submit">Submit</button>
+    </form>
+    <hr><hr>
+
+    <table border="1" width="80%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>City</th>
+              
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.map((item) => { %>
+            <tr>
+                <td><%= item._id %></td>
+                <td><%= item.name %></td>
+                <td><%= item.subject %></td>
+                <td><%= item.city %></td>
+
+                <td><button><a href="/editData?id=<%= item._id %>"><i class="fa-solid fa-pen-to-square"></i></a></button></td>
+                <td><button><a href="/deleteData?id=<%= item._id %>"><i class="fa-solid fa-trash-can"></i></a></button></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>

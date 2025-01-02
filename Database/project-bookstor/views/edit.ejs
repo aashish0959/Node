@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>CRUD with edit</h1>
+
+    <form action="/updateData" method="post" enctype="multipart/form-data">
+        <input type="text" style="display: none;" placeholder="enter book id" hidden name="id" value="<%=data.id%>">
+
+
+
+        <input type="text" name="title" placeholder="Name" value="<%=data.title%>">
+        <input type="text" name="author" placeholder="Subject" value="<%=data.author%>">
+        <input type="text" name="isbn" placeholder="City" value="<%=data.isbn%>">
+        <input type="text" name="published_date" value="<%=data.published_date%>">
+        <input type="text" name="genre" value="<%=data.genre%>">
+        <input type="file" name="image">
+        <img src="<%=data.image%>" alt="" width="10%">
+        <button type="submit">updateData</button>
+    </form>
+</body>
+</html>

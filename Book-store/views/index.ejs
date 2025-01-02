@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4p889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>CRUD with MongoDB</title>
+</head>
+
+<body class="bg-gray-100 min-h-screen font-quicksand">
+
+    <n   <nav class="bg-white shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <div class="flex items-center space-x-4">
+                <button class="text-gray-700 text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="text-lg font-bold text-gray-700">BOOKS TO HOME</h1>
+            </div>
+            <div class="flex items-center space-x-6">
+                <i class="fas fa-search text-black-700 text-xl cursor-pointer"></i>
+                <i class="fas fa-user text-gray-700 text-xl cursor-pointer"></i>
+                <div class="relative">
+                    <i class="fas fa-shopping-cart text-gray-700 text-xl cursor-pointer"></i>
+                    <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2">9</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div id="addBook" class="container mx-auto mt-8 bg-white shadow-lg rounded-lg p-6">
+        <h1 class="text-3xl font-bold text-center mb-8">Add New Book</h1>
+        <form action="/addData" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <input type="text" name="title" placeholder="Book Title" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <input type="text" name="author" placeholder="Author" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <input type="text" name="isbn" placeholder="ISBN (e.g., 978-1234567890)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <input type="date" name="published_date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <textarea name="description" placeholder="Description" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
+            <input type="text" name="genre" placeholder="Genre" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <input type="file" name="image" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <div class="flex justify-end space-x-4">
+                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Add Book</button>
+                <button type="reset" class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Book List Section -->
+    <div class="container mx-auto mt-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Book List</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <% data.map((item) => { %>
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <img src="<%= item.cover_image %>" class="w-full h-48 object-cover" alt="Book Cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-bold mb-2"><%= item.title %></h2>
+                    <p class="text-gray-600 mb-1">Author: <%= item.author %></p>
+                    <p class="text-gray-600 mb-1">ISBN: <%= item.isbn %></p>
+                    <p class="text-gray-600 mb-1">Published: <%= item.published_date %></p>
+                    <p class="text-gray-600 mb-1">Genre: <%= item.genre %></p>
+                    <p class="text-gray-600 mb-2">Description: <%= item.description %></p>
+
+                    <div class="flex justify-between items-center">
+                        <a href="/editData?id=<%= item._id %>" class="text-blue-600 hover:underline text-sm"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                        <a href="/deleteData?id=<%= item._id %>" class="text-red-600 hover:underline text-sm"><i class="fa-solid fa-trash-can"></i> Delete</a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+

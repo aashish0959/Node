@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>CRUD with MongoDB</title>
+</head>
+
+
+
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center font-quicksand">
+    <div class="w-full max-w-5xl bg-white shadow-lg rounded-lg p-6">
+        <h1 class="text-3xl font-bold text-center mb-8">Add New Book</h1>
+
+        <form action="/addData" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <input type="text" name="title" placeholder="Book Title" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <input type="text" name="author" placeholder="Author" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <input type="text" name="isbn" placeholder="ISBN (e.g., 978-1234567890)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <input type="date" name="published_date" placeholder="Published Date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <textarea name="description" placeholder="Description" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
+            <input type="text" name="genre" placeholder="Genre" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <input type="file" name="image" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <div class="flex justify-end space-x-4">
+                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Add Book</button>
+                <button type="reset" class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="w-full max-w-5xl bg-white shadow-lg rounded-lg p-6 mt-6">
+        <h1 class="text-3xl font-bold text-center mb-8">Book List</h1>
+        <table class="w-full border-collapse border border-gray-300 text-sm">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="border border-gray-300 px-4 py-2">Title</th>
+                    <th class="border border-gray-300 px-4 py-2">Author</th>
+                    <th class="border border-gray-300 px-4 py-2">ISBN</th>
+                    <th class="border border-gray-300 px-4 py-2">Published Date</th>
+                    <th class="border border-gray-300 px-4 py-2">Description</th>
+                
+                    <th class="border border-gray-300 px-4 py-2">Genre</th>
+                    <th class="border border-gray-300 px-4 py-2">Cover Image</th>
+                    <th class="border border-gray-300 px-4 py-2" colspan="2">Action</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <% data.map((item) => { %>
+                <tr class="odd:bg-white even:bg-gray-50">
+                    <td class="border border-gray-300 px-4 py-2"><%= item.title %></td>
+                    <td class="border border-gray-300 px-4 py-2"><%= item.author %></td>
+                    <td class="border border-gray-300 px-4 py-2"><%= item.isbn %></td>
+                    <td class="border border-gray-300 px-4 py-2"><%= item.published_date %></td>
+                    <td class="border border-gray-300 px-4 py-2"><%= item.description %></td>
+                    <td class="border border-gray-300 px-4 py-2"><%= item.genre %></td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        <img src="<%=item.image%>" class="w-20 h-auto rounded-lg" alt="">
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        <a href="/editData?id=<%= item._id %>" class="text-blue-600 hover:underline"><i class="fa-solid fa-pen-to-square"></i></a>
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        <a href="/deleteData?id=<%= item._id %>" class="text-red-600 hover:underline"><i class="fa-solid fa-trash-can"></i></a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+    
+
+</html>
