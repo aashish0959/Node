@@ -1,52 +1,77 @@
-const { name } = require("ejs");
 const express = require("express");
-const port = 4512;
+const port = 7412;
+const path = require("path");
 
 const app = express();
-let book = [
-  {id:"1" ,image:"https://m.media-amazon.com/images/I/61Le4Mn1AYL._SY466_.jpg" , name:"Metamorphosis " , author:"Franz Kafka" , price:"80",date:"01/02/2005" },
-  {id:"1" ,image:"https://m.media-amazon.com/images/I/41MQxal+RtL._SY445_SX342_.jpg" , name:"The Art of Letting Go " , author:"Nick Trenton" , price:"800",date:"01/12/2015" },
-  {id:"1" ,image:"https://m.media-amazon.com/images/I/61Le4Mn1AYL._SY466_.jpg" , name:"Metamorphosis " , author:"Franz Kafka" , price:"80",date:"01/02/2005" },
-  {id:"1" ,image:"https://m.media-amazon.com/images/I/61Le4Mn1AYL._SY466_.jpg" , name:"Metamorphosis " , author:"Franz Kafka" , price:"80",date:"01/02/2005" },
-];
+
+const db = require("./config/db");
+const schema = require("./model/firstSchema")
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded());
+const fs = require("fs");
 
-app.get("/", (req, res) => {
-  res.render("index", { book });
-});
+app.use(express.urlencoded())
 
-app.post("/addData", (req, res) => {
-  req.body.id = String(Date.now());
-  book.push(req.body);
-});
+app.use("/uploads",express.static(path.join(__dirname, 'uploads')));
 
-app.get("/deleteData", (req, res) => {
-  book = book.filter((e) => e.id !== req.query.id);
-  res.redirect("/");
-});
-app.get("/editData/:id", (req, res) => {
-  console.log("Requested ID:", req.params.id);
-  const singleData = book.find((item) => item.id === req.params.id);
-  console.log("Found Data:", singleData);
-  res.render("edit", { singleData });
-});
 
-app.post("/updataData", (req, res) => {
-  book.map((e) => {
-    if (e.id == req.body.id) {
-      e.name = req.body.name;
-      e.author = req.body.author;
-      e.price = req.body.price;
-      e.date = req.body.date;
-      e.image = req.body.image;
-    }
-    return e;
-  });
-  res.redirect("/");
-});
+const multer = require("multer");
+
+const Storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/");
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + " " + Date.now())
+    },
+})
+
+const upload = multer({
+    storage: Storage
+}).single("image")
+
+
+app.get("/", async (req, res) => {
+    let data = await schema.find({});
+    res.render("index", { data })
+})
+
+app.post("/addData",upload, async (req, res) => {
+    req.body.image = req.file.path
+    await schema.create(req.body).then(data => {
+            res.redirect("/")
+        })
+})
+
+app.get("/deleteData", async (req, res) => {
+
+    let singleData = await schema.findById(req.query.id);
+    fs.unlinkSync(singleData.image);
+
+    await schema.findByIdAndDelete(req.query.id).then((data) => {
+            res.redirect("/");
+        })
+})
+
+app.get("/editData", async (req, res) => {
+    let data = await schema.findById(req.query.id);
+    res.render("edit", { data });
+})
+
+app.post("/updateData", upload,async (req, res) => {
+    
+    let img = "";
+    let singleData = await schema.findById(req.body.id);
+    req.file ? (img = req.file.path) : (img = singleData.image);
+    req.file && fs.unlinkSync(singleData.image);
+    req.body.image = img;
+
+    await schema.findByIdAndUpdate(req.body.id, req.body)
+        .then((data) => {
+            res.redirect("/");
+        })
+})
 
 app.listen(port, (err) => {
-  err ? console.log(err) : console.log("server started on port :" + port);
-});
+    err ? console.log(err) : console.log("server start " + port);
+})
